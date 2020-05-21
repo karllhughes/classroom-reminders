@@ -68,7 +68,7 @@ module.exports.getCourses = async (tokens) => {
   return res.data.courses ? [...res.data.courses] : [];
 };
 
-module.exports.getCourseWork = async (tokens, courseId) => {
+module.exports.getCourseWorks = async (tokens, courseId) => {
   const auth = createConnection();
   auth.setCredentials(tokens);
 
@@ -76,7 +76,6 @@ module.exports.getCourseWork = async (tokens, courseId) => {
     .classroom({ version: "v1", auth })
     .courses.courseWork.list({ courseId: courseId, orderBy: "dueDate desc" });
 
-  console.log(res.data.courseWork);
   return res.data.courseWork ? [...res.data.courseWork] : [];
 };
 
@@ -99,5 +98,34 @@ module.exports.getCourseRoster = async (tokens, courseId) => {
     .classroom({ version: "v1", auth })
     .courses.students.list({ courseId: courseId });
 
+  return res.data.students ? [...res.data.students] : [];
+};
+
+module.exports.getCourseWork = async (tokens, courseId, assignmentId) => {
+  const auth = createConnection();
+  auth.setCredentials(tokens);
+
+  const res = await google
+    .classroom({ version: "v1", auth })
+    .courses.courseWork.get({ courseId: courseId, id: assignmentId });
+
   return { ...res.data };
+};
+
+module.exports.getStudentSubmissions = async (
+  tokens,
+  courseId,
+  assignmentId
+) => {
+  const auth = createConnection();
+  auth.setCredentials(tokens);
+
+  const res = await google
+    .classroom({ version: "v1", auth })
+    .courses.courseWork.studentSubmissions.list({
+      courseId: courseId,
+      courseWorkId: assignmentId,
+    });
+
+  return res.data.studentSubmissions ? [...res.data.studentSubmissions] : [];
 };

@@ -7,7 +7,7 @@
   <ul>
       {{#each assignments}}
         <li>
-          <a href="/assignments/{{ this.id }}">{{ this.title }}</a><br/>
+          <a href="/assignments/{{ ../id }}:{{ this.id }}">{{ this.title }}</a><br/>
           Due on {{ this.dueDate.year }}-{{ this.dueDate.month }}-{{ this.dueDate.day }}
         </li>
       {{/each}}

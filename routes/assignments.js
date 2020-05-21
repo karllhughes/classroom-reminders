@@ -10,7 +10,7 @@ router.get("/", function (req, res, next) {
   googleApi.getCourses(req.session.tokens).then(async (courses) => {
     Promise.all(
       courses.map(async (course) => {
-        course.assignments = await googleApi.getCourseWork(
+        course.assignments = await googleApi.getCourseWorks(
           req.session.tokens,
           course.id
         );
@@ -22,19 +22,45 @@ router.get("/", function (req, res, next) {
   });
 });
 
-router.get("/:assignmentId", function (req, res, next) {
+router.get("/:id", function (req, res, next) {
   if (!req.session.tokens) {
     res.redirect("/");
   }
 
+  const ids = req.params.id.split(":");
+  const courseId = ids[0];
+  const assignmentId = ids[1];
+
   Promise.all([
-    googleApi.getCourse(req.session.tokens, req.params.courseId),
-    googleApi.getCourseRoster(req.session.tokens, req.params.courseId),
-    googleApi.getLatestCourseWork(req.session.tokens, req.params.courseId),
-  ]).then(([course, roster, courseWork]) => {
-    console.log(course);
-    console.log(roster);
-    console.log(courseWork);
+    googleApi.getCourse(req.session.tokens, courseId),
+    googleApi.getCourseRoster(req.session.tokens, courseId),
+    googleApi.getCourseWork(req.session.tokens, courseId, assignmentId),
+    googleApi.getStudentSubmissions(req.session.tokens, courseId, assignmentId),
+  ]).then(([course, students, courseWork, submissions]) => {
+    // Match submissions to students
+    if (
+      students &&
+      students.length > 0 &&
+      submissions &&
+      submissions.length > 0
+    ) {
+      students.map((student) => {
+        student.submission = submissions.find(
+          (submission) => submission.userId === student.userId
+        );
+        if (student.submission && student.submission.state === "TURNED_IN") {
+          student.turnedIn = true;
+        }
+        return student;
+      });
+    }
+
+    res.render("assignment-messages", {
+      course,
+      students,
+      courseWork,
+      submissions,
+    });
   });
 });
 

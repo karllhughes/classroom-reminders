@@ -1,0 +1,23 @@
+<h1>Google Classroom Reminders</h1>
+<p>
+  Send your students reminders about <a href="{{ courseWork.alternateLink }}">{{ courseWork.title }}</a>
+  in <a href="{{ course.alternateLink }}">{{ course.name }}</a>.
+</p>
+
+{{#if students}}
+<form>
+  {{#each students}}
+  <p>
+    {{#if this.turnedIn}}
+      <a href="{{ this.alternateLink }}" title="Assignment turned in">✅</a>
+    {{else}}
+      <span title="Assignment not turned in">❗️</span>
+    {{/if}}
+    {{ this.profile.name.fullName }}
+  </p>
+  {{/each}}
+</form>
+{{else}}
+<p>No students found</p>
+{{/if}}
+<p><a href="/assignments">Back to all assignments</a></p>
