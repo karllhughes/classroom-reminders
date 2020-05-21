@@ -6,7 +6,7 @@ const logger = require("morgan");
 const session = require("express-session");
 
 const indexRouter = require("./routes/index");
-const coursesRouter = require("./routes/courses");
+const assignmentsRouter = require("./routes/assignments");
 
 const app = express();
 
@@ -32,7 +32,7 @@ app.use(
 );
 
 app.use("/", indexRouter);
-app.use("/courses", coursesRouter);
+app.use("/assignments", assignmentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

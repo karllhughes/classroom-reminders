@@ -7,13 +7,22 @@ router.get("/", function (req, res, next) {
     res.redirect("/");
   }
 
-  console.log(JSON.stringify(req.session.tokens));
-  googleApi.getCourses(req.session.tokens).then((courses) => {
-    res.render("courses", { courses });
+  googleApi.getCourses(req.session.tokens).then(async (courses) => {
+    Promise.all(
+      courses.map(async (course) => {
+        course.assignments = await googleApi.getCourseWork(
+          req.session.tokens,
+          course.id
+        );
+        return course;
+      })
+    ).then((courses) => {
+      res.render("assignments", { courses });
+    });
   });
 });
 
-router.get("/:courseId", function (req, res, next) {
+router.get("/:assignmentId", function (req, res, next) {
   if (!req.session.tokens) {
     res.redirect("/");
   }

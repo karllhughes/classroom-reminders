@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "dev": "nodemon ./bin/www",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -19,6 +20,7 @@
   "devDependencies": {
     "husky": "^4.2.5",
     "lint-staged": "^10.2.2",
+    "nodemon": "^2.0.4",
     "prettier": "2.0.5"
   },
   "husky": {

@@ -7,7 +7,7 @@ router.get("/", function (req, res, next) {
     googleApi.getToken(req.query.code).then((tokens) => {
       req.session.tokens = tokens;
       req.session.save(() => {
-        res.redirect("/courses");
+        res.redirect("/assignments");
       });
     });
   } else {

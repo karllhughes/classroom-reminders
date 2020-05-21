@@ -1,0 +1,18 @@
+<h1>Google Classroom Reminders</h1>
+<p>Select an Assignment to remind your students about.</p>
+
+{{#each courses}}
+<h2>{{ this.name }}</h2>
+  {{#if assignments}}
+  <ul>
+      {{#each assignments}}
+        <li>
+          <a href="/assignments/{{ this.id }}">{{ this.title }}</a><br/>
+          Due on {{ this.dueDate.year }}-{{ this.dueDate.month }}-{{ this.dueDate.day }}
+        </li>
+      {{/each}}
+  </ul>
+  {{else}}
+  <p>No assignments found</p>
+  {{/if}}
+{{/each}}
