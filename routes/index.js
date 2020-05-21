@@ -1,9 +1,20 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
+const googleApi = require("../helpers/google-api");
 
-/* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
+  if (req.query.code) {
+    googleApi.getToken(req.query.code).then((tokens) => {
+      req.session.tokens = tokens;
+      req.session.save(() => {
+        res.redirect("/courses");
+      });
+    });
+  } else {
+    res.render("index", {
+      loginUrl: googleApi.loginUrl(),
+    });
+  }
 });
 
 module.exports = router;
