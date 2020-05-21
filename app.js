@@ -7,6 +7,7 @@ const session = require("express-session");
 
 const indexRouter = require("./routes/index");
 const assignmentsRouter = require("./routes/assignments");
+const messagesRouter = require("./routes/messages");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
+  // TODO: See if I need these
   session({
     secret: process.env.SESSION_SECRET,
     resave: true,
@@ -33,6 +35,7 @@ app.use(
 
 app.use("/", indexRouter);
 app.use("/assignments", assignmentsRouter);
+app.use("/messages", messagesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

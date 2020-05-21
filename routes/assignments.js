@@ -55,7 +55,7 @@ router.get("/:id", function (req, res, next) {
       });
     }
 
-    res.render("assignment-messages", {
+    res.render("assignment", {
       course,
       students,
       courseWork,

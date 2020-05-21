@@ -1,0 +1,34 @@
+<h1>Google Classroom Reminders</h1>
+<p>
+  Send your students reminders about <a href="{{ courseWork.alternateLink }}">{{ courseWork.title }}</a>
+  in <a href="{{ course.alternateLink }}">{{ course.name }}</a>.
+</p>
+
+{{#if students}}
+<form action="/messages" method="post">
+  {{#each students}}
+  <p>
+    {{#if this.turnedIn}}
+      <a href="{{ this.alternateLink }}" title="Assignment turned in">✅</a>
+    {{else}}
+      <span title="Assignment not turned in">❗️</span>
+    {{/if}}
+    <strong>{{ this.profile.name.fullName }}</strong>
+  </p>
+  <div>
+    <label for="message" style="display: block;">Reminder message</label>
+    <textarea id="message" name="message" maxlength="140" minlength="3" rows="5" cols="30">Hey {{ this.profile.name.givenName }}, don't forget about your assignment for {{ ../course.name }}. It's due on {{ ../courseWork.dueDate.year }}-{{ ../courseWork.dueDate.month }}-{{ ../courseWork.dueDate.day }}</textarea>
+  </div>
+  <div>
+    <label for="telephone" style="display: block;">Telephone</label>
+    <input type="tel" id="telephone" autocomplete="off" name="telephone" />
+  </div>
+  {{/each}}
+  <div style="margin-top: 10px;">
+    <input type="submit" value="Send Reminders">
+  </div>
+</form>
+{{else}}
+<p>No students found</p>
+{{/if}}
+<p><a href="/assignments">↩️ Back to all assignments</a></p>
