@@ -16,12 +16,12 @@
     <strong>{{ this.profile.name.fullName }}</strong>
   </p>
   <div>
-    <label for="message" style="display: block;">Reminder message</label>
-    <textarea id="message" name="message" maxlength="140" minlength="3" rows="5" cols="30">Hey {{ this.profile.name.givenName }}, don't forget about your assignment for {{ ../course.name }}. It's due on {{ ../courseWork.dueDate.year }}-{{ ../courseWork.dueDate.month }}-{{ ../courseWork.dueDate.day }}</textarea>
+    <label for="message-{{ this.userId }}" style="display: block;">Reminder message</label>
+    <textarea id="message-{{ this.userId }}" name="messages" maxlength="140" minlength="3" rows="5" cols="30">Hey {{ this.profile.name.givenName }}, don't forget about your assignment for {{ ../course.name }}. It's due on {{ ../courseWork.dueDate.month }}/{{ ../courseWork.dueDate.day }}/{{ ../courseWork.dueDate.year }}</textarea>
   </div>
   <div>
-    <label for="telephone" style="display: block;">Telephone</label>
-    <input type="tel" id="telephone" autocomplete="off" name="telephone" />
+    <label for="telephone-{{ this.userId }}" style="display: block;">Telephone</label>
+    <input type="tel" id="telephone-{{ this.userId }}" autocomplete="off" name="telephones" />
   </div>
   {{/each}}
   <div style="margin-top: 10px;">
