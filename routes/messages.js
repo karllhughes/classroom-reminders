@@ -1,7 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const PNF = require("google-libphonenumber").PhoneNumberFormat;
-const phoneUtil = require("google-libphonenumber").PhoneNumberUtil.getInstance();
 const nexmoApi = require("../helpers/nexmo-api");
 
 router.post("/", function (req, res, next) {
@@ -12,11 +10,7 @@ router.post("/", function (req, res, next) {
   Promise.all(
     telephones.map((telephone, key) => {
       if (telephone) {
-        const formattedPhoneNumber = phoneUtil.format(
-          phoneUtil.parseAndKeepRawInput(telephone, "US"),
-          PNF.E164
-        );
-        return nexmoApi.sendSms(formattedPhoneNumber, messages[key]);
+        return nexmoApi.sendSms(telephone, messages[key]);
       }
     })
   ).then((results) => {
