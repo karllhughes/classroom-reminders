@@ -21,15 +21,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
-  // TODO: See if I need these
   session({
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
-    cookie: {
-      secure: false,
-      maxAge: 6000000,
-    },
   })
 );
 

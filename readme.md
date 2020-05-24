@@ -27,7 +27,7 @@ NEXMO_API_SECRET=<YOUR VONAGE MESSAGES API SECRET> \
 NEXMO_PHONE_NUMBER=<YOUR VONAGE MESSAGES PHONE NUMBER> \
 NEXMO_APP_ID=<YOUR VONAGE MESSAGES APP ID> \
 NEXMO_PRIVATE_KEY_PATH=./.private_key \
-npm run dev
+npm start
 ```
 
 Navigate to `localhost:3000` to log in to the app and use it to send reminders to your students.
